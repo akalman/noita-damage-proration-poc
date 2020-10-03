@@ -1,0 +1,6 @@
+<Entity>
+    <VariableStorageComponent
+        name = "projectile_tree_id"
+        value_int = 7>
+    </VariableStorageComponent>
+</Entity>

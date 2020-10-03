@@ -1,4 +1,4 @@
-### noita-damage-proration-poc
+## noita-damage-proration-poc
 
 this noita mod attempts to demonstrate three different types of damage
 proration mechanics in noita.  each is extracted into an isolated set of
@@ -13,7 +13,7 @@ individual projectile tree.
 enemy defense scaling based proration: will reduce damage taken by enemies
 based on scaling defenses per damage type.  does not currently work.
 
-#### fire rate based proration
+### fire rate based proration
 
 a module that will reduce the amount of damage each projectile fired by the
 player does based on the amount of projectiles that recently fired.  creates
@@ -28,25 +28,25 @@ change the damage of the new projectile based on that same global counter.
 then another script will slowly decrement the global counter by 1 every n
 frames.
 
-##### fire-rate-based-prorator.lua
+#### fire-rate-based-prorator.lua
 
 every time a project is fired from the player, we look up how many
 projectiles have been fired recently and exponentially scale damage of the
 new projectile based on that.
 
-##### fire-rate-counter.lua
+#### fire-rate-counter.lua
 
 every time a project is fired from the player, we increment a global counter
 representing how many projectiles have been fired recently.
 
-##### fire-rate-decrementer.lua
+#### fire-rate-decrementer.lua
 
 every n frames (as determined by the LuaComponent) we decrement a global
 counter representing how many projectiles have been fired recently.
 alternatively this counter could be hard reset to zero after a non-zero frame
 reload or after n frames without firing.
 
-#### projectile tree based proration
+### projectile tree based proration
 
 a module that will reduce the amount of damage each projectile fired by the
 player does based on the amount of projectiles fired by that one fire event.
@@ -63,27 +63,27 @@ tree has finished spawning all its projectiles, where n is the number of
 entity files.  currently this as 10 entity files, but we will likely need
 more in practice to avoid errors.
 
-##### gun-append.lua
+#### gun-append.lua
 
 intercepts core gun firing APIs to construct a projectile tree every time the
 wand is fired.  this tree is then published in a global variable for reading
 later.  also will append a variable component to each projectile created that
 will state the id of the projectile tree that it came from.
 
-##### projectile-tree-based-prorator.lua
+#### projectile-tree-based-prorator.lua
 
 every time a project is fired from the player, we look up the projectile tree
 that created the projectile and exponentially scale damage based on how many
 elements the tree has. alternatively this could be done recursively for each
 bullet.  this would require resolving each bullet to its place in the tree.
 
-##### projectile-tree-id-counter
+#### projectile-tree-id-counter
 
 every time the wand is fired we increase a global counter that represents the
 current projectile tree id.  we then wrap around at the end of the projectile
 tree.
 
-#### enemy defense scaling based proration
+### enemy defense scaling based proration
 
 a module that will reduce the amount of damage each projectile that hits each
 given enemy based on the amount of time that enemy has received damage of the
@@ -116,12 +116,12 @@ this is because there isn't a mod level API hook for spawning enemies like
 there is for bullets.  this will need to be fixed, since it hurts performance
 pretty badly.
 
-##### debug-log-damage-received.lua
+#### debug-log-damage-received.lua
 
 just used to debug how much damage an enemy will actually take to prove that
 this proration component works.
 
-##### enemy-defense-scaling-based-prorator.lua
+#### enemy-defense-scaling-based-prorator.lua
 
 every time a projectile collides with an enemy, but before damage is dealt,
 adjust the damage of the projectile based on the number of damage instances
